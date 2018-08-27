@@ -1,5 +1,5 @@
 {
-    "name": "packages/opensearch",
+    "name": "kevin/laravel-opensearch",
     "description": "Laravel OpenSearch package",
     "type": "library",
     "license": "MIT",
@@ -14,6 +14,16 @@
             "OpenSearch\\": "sdk/",
             "Thrift\\": "sdk/Thrift/",
             "Kevin\\OpenSearch\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kevin\\OpenSearch\\OpenSearchProvider"
+            ],
+            "aliases": {
+                "SearchClient": "Kevin\\OpenSearch\\Facades\\SearchClient"
+            }
         }
     },
     "minimum-stability": "dev",
