@@ -1,0 +1,21 @@
+{
+    "name": "packages/opensearch",
+    "description": "Laravel OpenSearch package",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin",
+            "email": "hivenkay@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "OpenSearch\\": "sdk/",
+            "Thrift\\": "sdk/Thrift/",
+            "Kevin\\OpenSearch\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
