@@ -13,6 +13,16 @@ use OpenSearch\Util\SearchParamsBuilder;
 
 trait SearchParamsTrait
 {
+    function __call($name, $arguments)
+    {
+        try {
+            $this->getParamsBuilder()->$name(...$arguments);
+        } catch (\Exception $e) {
+
+        }
+        return $this;
+    }
+
     /**
      * 合并 setStart 及 setHits
      * @Date: 2018/8/26
@@ -27,40 +37,10 @@ trait SearchParamsTrait
         $this->setHits($count);
         return $this;
     }
-    public function setStart($start)
-    {
-        $this->getParamsBuilder()->setStart($start);
-        return $this;
-    }
-    public function setHits($count)
-    {
-        $this->getParamsBuilder()->setHits($count);
-        return $this;
-    }
     public function setAppName($name)
     {
         $this->appName = $name;
         $this->getParamsBuilder()->setAppName($name);
-        return $this;
-    }
-    public function setFormat($format)
-    {
-        $this->getParamsBuilder()->setFormat($format);
-        return $this;
-    }
-    public function setKvPairs($kvpairs)
-    {
-        $this->getParamsBuilder()->setKvPairs($kvpairs);
-        return $this;
-    }
-    public function setFetchFields($fetchFields)
-    {
-        $this->getParamsBuilder()->setFetchFields($fetchFields);
-        return $this;
-    }
-    public function setRouteValue($routeValue)
-    {
-        $this->getParamsBuilder()->setRouteValue($routeValue);
         return $this;
     }
 
@@ -76,36 +56,6 @@ trait SearchParamsTrait
         foreach ($config as $k=>$v) {
             $this->getParamsBuilder()->setCustomConfig($k,$v);
         }
-        return $this;
-    }
-    public function setFilter($filter)
-    {
-        $this->getParamsBuilder()->setFilter($filter);
-        return $this;
-    }
-    public function addFilter($filter,$condition = 'AND')
-    {
-        $this->getParamsBuilder()->addFilter($filter,$condition);
-        return $this;
-    }
-    public function addSort(array $sort)
-    {
-        foreach ($sort as $s) {
-            if (!isset($s['order'])) {
-                $s['order'] = SearchParamsBuilder::SORT_DECREASE;
-            }
-            $this->getParamsBuilder()->addSort($s['field'], $s['order']);
-        }
-        return $this;
-    }
-    public function setFirstRankName($firstRankName)
-    {
-        $this->getParamsBuilder()->setFIrstRankName($firstRankName);
-        return $this;
-    }
-    public function setSecondRankName($secondRankName)
-    {
-        $this->getParamsBuilder()->setSecondRankName($secondRankName);
         return $this;
     }
     public function addAggregate($aggregate)
@@ -179,19 +129,6 @@ trait SearchParamsTrait
                 $this->getParamsBuilder()->setCustomParam($k,$v);
             }
         }
-        return $this;
-    }
-    public function setReRankSize($reRankSize){
-        $this->getParamsBuilder()->setReRankSize($reRankSize);
-    }
-    public function setScrollExpire($expiredTime)
-    {
-        $this->getParamsBuilder()->setScrollExpire($expiredTime);
-        return $this;
-    }
-    public function setScrollId($scrollId)
-    {
-        $this->getParamsBuilder()->setScrollId($scrollId);
         return $this;
     }
 }

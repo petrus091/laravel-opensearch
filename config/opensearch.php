@@ -16,5 +16,6 @@ return [
 //        'gzip'=>'',
 //        'timeout'=>'',
 //        'connectTimeout'=>'',
+        'per_page_num'=>20,
     ],
 ];

@@ -28,7 +28,7 @@ abstract class OpenSearchAbstract
     public function __construct($appId,$secret,$host,$options)
     {
         if(!$appId || !$secret || !$host || !$options || !is_array($options))
-            throw new \InvalidArgumentException();
+            throw new \Exception('配置信息不能为空');
         $this->appId = $appId;
         $this->secret = $secret;
         $this->host = $host;
@@ -48,7 +48,11 @@ abstract class OpenSearchAbstract
     public function parseResult($res)
     {
         $data = json_decode($res->result,true);
-        return $data;
+        if($data['status'] === 'OK') {
+            return $data['result']['items'];
+        } else {
+            return [];
+        }
     }
 
 

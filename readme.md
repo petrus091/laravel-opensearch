@@ -19,7 +19,7 @@
 
 ##  SearchClient 搜索服务
 ### 使用
- * `php artisan vendor:publish --provider="App\Libs\OpenSearch\src\OpenSearchProvider"` 发布配置
+ * `php artisan vendor:publish --provider="Kevin\OpenSearch\OpenSearchProvider"` 发布配置
  * `config/opensearch.php` 中配置相关信息
  * $params 调用方法参考阿里云 `opensearch`的 `SearchParamsBuilder`
 ```php
