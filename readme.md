@@ -36,6 +36,7 @@
 ### 注意事项
  * 参数设置方法参照原 `SearchParamsBuilder` 类方法,以下变更需注意(!!!):
   * `setCustomConfig` 方法 参数 改为 array 形式,如 `['key'=>'value']`
+  * `setKvPairs` 方法 参数 改为 array 形式,如 `['key'=>'value']`
   * `addDistinct` 方法 参数 改为 array 形式,如上
   * `addSummary` 方法 参数 改为 array , 如 `[$summary1,$summary2]`
   * `setCustomParam` 改为 `setCustomParams` ,参数改为 array 形式

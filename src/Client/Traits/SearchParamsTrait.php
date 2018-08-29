@@ -88,7 +88,21 @@ trait SearchParamsTrait
         }
         return $this;
     }
-
+    public function setKvPairs(array $kvPairs)
+    {
+        $str = '';
+        $separator = ',';
+        $i = 1;
+        foreach ($kvPairs as $k=>$v) {
+            $str .= sprintf('%s:%s',$k,$v);
+            if($i != count($kvPairs)) {
+                $str .= $separator;
+            }
+            $i++;
+        }
+        $this->getParamsBuilder()->setKvPairs($str);
+        return $this;
+    }
     /**
      * @Date: 2018/8/26
      * @User: Kevin

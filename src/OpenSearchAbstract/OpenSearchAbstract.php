@@ -48,10 +48,20 @@ abstract class OpenSearchAbstract
     public function parseResult($res)
     {
         $data = json_decode($res->result,true);
-        if($data['status'] === 'OK') {
-            return $data['result']['items'];
+        if($data['status'] === 'OK' && count($data['result']['items'])) {
+            $arr = [];
+            foreach ($data['result']['items'] as $item) {
+                $arr[] = $item['fields'];
+            }
+            return [
+                'data'=>$arr,
+                'total'=>$data['result']['total']
+            ];
         } else {
-            return [];
+            return [
+                'data'=>[],
+                'total'=>0,
+            ];
         }
     }
 
