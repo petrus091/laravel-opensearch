@@ -9,15 +9,18 @@
 namespace Kevin\OpenSearch\OpenSearchAbstract;
 
 
+use Kevin\OpenSearch\OpenSearchAbstract\Traits\SearchParamsTrait;
 use OpenSearch\Client\OpenSearchClient;
 
 abstract class OpenSearchAbstract
 {
-    private $appId;
-    private $secret;
-    private $host;
-    private $options;
-    private $client;
+    use SearchParamsTrait;
+    protected $appId;
+    protected $secret;
+    protected $host;
+    protected $appName;
+    protected $options;
+    protected $client;
     /**
      * OpenSearchAbstract constructor.
      * @param $appId
@@ -35,8 +38,6 @@ abstract class OpenSearchAbstract
         $this->options = $options;
     }
 
-    abstract public function search($query);
-
     public function getClient()
     {
         if(!$this->client) {
@@ -44,26 +45,7 @@ abstract class OpenSearchAbstract
         }
         return $this->client;
     }
-
-    public function parseResult($res)
-    {
-        $data = json_decode($res->result,true);
-        if($data['status'] === 'OK' && count($data['result']['items'])) {
-            $arr = [];
-            foreach ($data['result']['items'] as $item) {
-                $arr[] = $item['fields'];
-            }
-            return [
-                'data'=>$arr,
-                'total'=>$data['result']['total']
-            ];
-        } else {
-            return [
-                'data'=>[],
-                'total'=>0,
-            ];
-        }
-    }
+    abstract protected function getParamsBuilder();
 
 
 }

@@ -22,7 +22,8 @@
                 "Kevin\\OpenSearch\\OpenSearchProvider"
             ],
             "aliases": {
-                "SearchClient": "Kevin\\OpenSearch\\Facades\\SearchClient"
+                "SearchClient": "Kevin\\OpenSearch\\Facades\\SearchClient",
+                "DocumentClient": "Kevin\\OpenSearch\\Facades\\DocumentClient"
             }
         }
     },

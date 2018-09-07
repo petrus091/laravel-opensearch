@@ -6,14 +6,14 @@
  * Time: 11:35
  */
 
-namespace Kevin\OpenSearch\Client\Traits;
+namespace Kevin\OpenSearch\OpenSearchAbstract\Traits;
 
 
 use OpenSearch\Util\SearchParamsBuilder;
 
 trait SearchParamsTrait
 {
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         try {
             $this->getParamsBuilder()->$name(...$arguments);
@@ -31,16 +31,19 @@ trait SearchParamsTrait
      * @param $count
      * @return $this
      */
-    public function limit($start,$count)
+    public function limit($start, $count)
     {
         $this->setStart($start);
         $this->setHits($count);
         return $this;
     }
+
     public function setAppName($name)
     {
         $this->appName = $name;
-        $this->getParamsBuilder()->setAppName($name);
+        if($this->getParamsBuilder()) {
+            $this->getParamsBuilder()->setAppName($name);
+        }
         return $this;
     }
 
@@ -53,14 +56,15 @@ trait SearchParamsTrait
      */
     public function setCustomConfig(array $config)
     {
-        foreach ($config as $k=>$v) {
-            $this->getParamsBuilder()->setCustomConfig($k,$v);
+        foreach ($config as $k => $v) {
+            $this->getParamsBuilder()->setCustomConfig($k, $v);
         }
         return $this;
     }
+
     public function addAggregate($aggregate)
     {
-        if(isset($aggregate['groupKey'])) {
+        if (isset($aggregate['groupKey'])) {
             $this->getParamsBuilder()->addAggregate($aggregate);
         } else if (isset($aggregate[0])) {
             foreach ($aggregate as $v) {
@@ -79,7 +83,7 @@ trait SearchParamsTrait
      */
     public function addDistinct($distinct)
     {
-        if(isset($distinct[0])) {
+        if (isset($distinct[0])) {
             foreach ($distinct as $v) {
                 $this->getParamsBuilder()->addDistinct($v);
             }
@@ -88,14 +92,15 @@ trait SearchParamsTrait
         }
         return $this;
     }
+
     public function setKvPairs(array $kvPairs)
     {
         $str = '';
         $separator = ',';
         $i = 1;
-        foreach ($kvPairs as $k=>$v) {
-            $str .= sprintf('%s:%s',$k,$v);
-            if($i != count($kvPairs)) {
+        foreach ($kvPairs as $k => $v) {
+            $str .= sprintf('%s:%s', $k, $v);
+            if ($i != count($kvPairs)) {
                 $str .= $separator;
             }
             $i++;
@@ -103,6 +108,7 @@ trait SearchParamsTrait
         $this->getParamsBuilder()->setKvPairs($str);
         return $this;
     }
+
     /**
      * @Date: 2018/8/26
      * @User: Kevin
@@ -116,9 +122,10 @@ trait SearchParamsTrait
         }
         return $this;
     }
+
     public function addQueryProcessor($qp)
     {
-        if(is_array($qp)) {
+        if (!is_array($qp)) {
             $qp = array($qp);
         }
         foreach ($qp as $v) {
@@ -126,9 +133,10 @@ trait SearchParamsTrait
         }
         return $this;
     }
+
     public function addDisableFunctions($disableFunctions)
     {
-        if(is_array($disableFunctions)) {
+        if (is_array($disableFunctions)) {
             foreach ($disableFunctions as $fun) {
                 $this->getParamsBuilder()->addDisableFunctions($fun);
             }
@@ -136,12 +144,11 @@ trait SearchParamsTrait
             $this->getParamsBuilder()->addDisableFunctions($disableFunctions);
         }
     }
+
     public function setCustomParams(array $customParams)
     {
-        if(is_array($customParams)) {
-            foreach ($customParams as $k=>$v) {
-                $this->getParamsBuilder()->setCustomParam($k,$v);
-            }
+        foreach ($customParams as $k => $v) {
+            $this->getParamsBuilder()->setCustomParam($k, $v);
         }
         return $this;
     }

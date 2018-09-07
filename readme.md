@@ -27,11 +27,11 @@
         $params = $searchClient->getParamsBuilder();
         $params->setStart(0);
         $params->setHits(20);
-        $res = $searchClient->search('水');
+        $res = $searchClient->search('default','水')->orSearch('default','面膜')->get();
 ```
  * 通过外观调用,支持链式调用
 ```php
-        SearchClient::limit(0,20)->search('水')->get(['id','title_zn_cn']);
+        SearchClient::limit(0,20)->search('default','水')->get(['id','title_zn_cn']);
 ```
 ### 注意事项
  * 参数设置方法参照原 `SearchParamsBuilder` 类方法,以下变更需注意(!!!):
@@ -41,4 +41,7 @@
   * `addSummary` 方法 参数 改为 array , 如 `[$summary1,$summary2]`
   * `setCustomParam` 改为 `setCustomParams` ,参数改为 array 形式
   * 新增 `limit($start,$count)` 方法 , 用以合并原 `setStart($start)` 及 `setHits($count)` 方法,原`setStart`及`setHits`依然可用
+  
+ * `search`方法参数对应:index->索引名称,keyword->检索关键词
+ * 新增`orSearch`,`andSearch`方法
  

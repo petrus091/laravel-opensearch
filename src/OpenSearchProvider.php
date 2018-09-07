@@ -2,6 +2,7 @@
 
 namespace Kevin\OpenSearch;
 
+use Kevin\OpenSearch\Client\DocumentClient;
 use Kevin\OpenSearch\Client\SearchClient;
 use Illuminate\Support\ServiceProvider;
 
@@ -37,6 +38,12 @@ class OpenSearchProvider extends ServiceProvider
             $searchClient = new SearchClient($config['accessKeyId'],$config['secret'],$config['endPoint'],$config['options']);
             $searchClient->setAppName($config['appName']);
             return $searchClient;
+        });
+        $this->app->singleton('opensearch.document_client',function(){
+            $config = config('opensearch');
+            $client = new DocumentClient($config['accessKeyId'],$config['secret'],$config['endPoint'],$config['options']);
+            $client->setAppName($config['appName']);
+            return $client;
         });
     }
 
